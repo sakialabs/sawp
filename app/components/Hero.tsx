@@ -17,6 +17,8 @@ const HeroSection = () => {
       src: "/protests/protest5.jpg",
       alt: "Sudanese Youth advocates for change in New York",
     },
+    { src: "/protests/protest6.jpg", alt: "Peace demonstration in London" },
+    { src: "/protests/protest7.jpg", alt: "Peace demonstration in Paris" },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
