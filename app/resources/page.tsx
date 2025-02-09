@@ -33,7 +33,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { ContactDialog } from "@/components/shared/ContactDialog";
-import DonateButton from "@/app/components/Donate";
+import DonateButton from "@/components/shared/Donate";
 
 export default function ResourcesPage() {
   const [contactOpen, setContactOpen] = useState(false);
@@ -658,7 +658,7 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      <section className="py-16 sm:py-24 lg:py-32 bg-zinc-50 dark:bg-zinc-900">
+      <section className="py-16 sm:py-24 lg:py-32 bg-sudan-white dark:bg-sudan-black">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-zinc-900 dark:text-white mb-4">

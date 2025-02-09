@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import DonateButton from "@/components/shared/Donate";
 import { ChevronRight, Heart } from "lucide-react";
 
 export default function CallToAction() {
@@ -48,16 +49,7 @@ export default function CallToAction() {
               <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>
-          <Button
-            asChild
-            size="lg"
-            className="w-full md:w-auto bg-sudan-green hover:bg-[#005720] text-sudan-white transition-colors group [&:hover_svg]:fill-current"
-          >
-            <Link href="https://sapa-usa.org/ramadan-for-sudan/">
-              Donate Now
-              <Heart className="ml-2 h-4 w-4 transition-all group-hover:scale-110" />
-            </Link>
-          </Button>
+          <DonateButton />
         </div>
       </div>
     </section>

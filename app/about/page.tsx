@@ -7,7 +7,7 @@ import { ChevronRight, Heart, Link } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { ContactDialog } from "@/components/shared/ContactDialog";
-import DonateButton from "@/app/components/Donate";
+import DonateButton from "@/components/shared/Donate";
 
 interface ImpactStat {
   number: string;
@@ -142,7 +142,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values Section */}
-      <section className="py-16 sm:py-24 lg:py-32 bg-zinc-50 dark:bg-zinc-950">
+      <section className="py-16 sm:py-24 lg:py-32 bg-sudan-white dark:bg-sudan-black">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-24">
             <h2 className="text-3xl lg:text-4xl font-bold text-zinc-900 dark:text-white mt-2 mb-6">

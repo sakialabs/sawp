@@ -36,7 +36,7 @@ const NewsFeed = dynamic(() => import("@/app/components/NewsFeed"), {
 
 export default function Home() {
   return (
-    <main className="bg-zinc-50 dark:bg-zinc-950 min-h-screen">
+    <main className="bg-sudan-white dark:bg-sudan-black min-h-screen">
       <HeroSection />
 
       <section className="py-16 md:py-24 relative z-0">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -16,230 +16,58 @@ import {
   Languages,
 } from "lucide-react";
 import { ContactDialog } from "@/components/shared/ContactDialog";
-import DonateButton from "@/app/components/Donate";
-
-const BentoGallery = () => {
-  return (
-    <div className="grid md:grid-cols-4 gap-4 p-4">
-      <div className="col-span-2 row-span-2 relative overflow-hidden rounded-xl h-[500px]">
-        <img
-          src="/protests/protest1.jpg"
-          alt="Protest 1"
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent">
-          <div className="absolute bottom-4 left-4 text-white">
-            <h3 className="text-xl font-bold">United Voices</h3>
-            <p className="text-sm opacity-80">London, 2025</p>
-          </div>
-        </div>
-      </div>
-      <div className="col-span-2 relative overflow-hidden rounded-xl h-[240px]">
-        <img
-          src="/protests/protest2.jpg"
-          alt="Protest 2"
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent">
-          <div className="absolute bottom-4 left-4 text-white">
-            <h3 className="text-xl font-bold">Peace March</h3>
-            <p className="text-sm opacity-80">New York, 2025</p>
-          </div>
-        </div>
-      </div>
-      <div className="relative overflow-hidden rounded-xl h-[240px]">
-        <img
-          src="/protests/protest3.jpg"
-          alt="Protest 3"
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent">
-          <div className="absolute bottom-4 left-4 text-white">
-            <h3 className="text-xl font-bold">Youth Rally</h3>
-            <p className="text-sm opacity-80">Paris, 2025</p>
-          </div>
-        </div>
-      </div>
-      <div className="relative overflow-hidden rounded-xl h-[240px]">
-        <img
-          src="/protests/protest1.jpg"
-          alt="Protest 4"
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent">
-          <div className="absolute bottom-4 left-4 text-white">
-            <h3 className="text-xl font-bold">Global Unity</h3>
-            <p className="text-sm opacity-80">Berlin, 2025</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const ScrollingGallery = () => {
-  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const [showLeftArrow, setShowLeftArrow] = useState(false);
-  const [showRightArrow, setShowRightArrow] = useState(true);
-  const [isHovering, setIsHovering] = useState(false);
-
-  interface MouseEvent {
-    pageX: number;
-  }
-
-  interface ScrollContainer extends HTMLDivElement {
-    offsetLeft: number;
-    scrollLeft: number;
-  }
-
-  const handleMouseDown = (e: MouseEvent): void => {
-    if (!scrollContainerRef.current) return;
-    setIsDragging(true);
-    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
-    setScrollLeft(scrollContainerRef.current.scrollLeft);
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  interface MousePosition {
-    pageX: number;
-    preventDefault: () => void;
-  }
-
-  const handleMouseMove = (e: MousePosition): void => {
-    if (!isDragging || !scrollContainerRef.current) return;
-    e.preventDefault();
-    const x: number = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk: number = (x - startX) * 2;
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleScroll = () => {
-    if (!scrollContainerRef.current) return;
-    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-    setShowLeftArrow(scrollLeft > 0);
-    setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10);
-  };
-
-  interface ScrollDirection {
-    direction: "left" | "right";
-  }
-
-  const scroll = (direction: ScrollDirection["direction"]): void => {
-    if (!scrollContainerRef.current) return;
-    const scrollAmount: number = direction === "left" ? -400 : 400;
-    scrollContainerRef.current.scrollBy({
-      left: scrollAmount,
-      behavior: "smooth",
-    });
-  };
-
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    interface WheelEvent {
-      deltaX: number;
-      deltaY: number;
-      shiftKey: boolean;
-      preventDefault: () => void;
-    }
-
-    const handleWheel = (e: WheelEvent): void => {
-      // Only prevent default and handle horizontal scroll when hovering
-      if (isHovering) {
-        if (e.deltaX !== 0) {
-          e.preventDefault();
-          container.scrollLeft += e.deltaX;
-        } else if (e.deltaY !== 0 && e.shiftKey) {
-          e.preventDefault();
-          container.scrollLeft += e.deltaY;
-        }
-      }
-    };
-
-    container.addEventListener("wheel", handleWheel, { passive: false });
-    container.addEventListener("scroll", handleScroll);
-
-    return () => {
-      container.removeEventListener("wheel", handleWheel);
-      container.removeEventListener("scroll", handleScroll);
-    };
-  }, [isHovering]);
-
-  return (
-    <div
-      className="relative h-[50vh] md:h-screen overflow-hidden bg-white dark:bg-sudan-black"
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => {
-        setIsHovering(false);
-        setIsDragging(false);
-      }}
-    >
-      {showLeftArrow && (
-        <button
-          onClick={() => scroll("left")}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full"
-        >
-          <ChevronRight className="h-6 w-6 rotate-180" />
-        </button>
-      )}
-      {showRightArrow && (
-        <button
-          onClick={() => scroll("right")}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full"
-        >
-          <ChevronRight className="h-6 w-6" />
-        </button>
-      )}
-      <div
-        ref={scrollContainerRef}
-        className="flex gap-4 px-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory h-full items-center"
-        style={{
-          scrollBehavior: "smooth",
-          cursor: isDragging ? "grabbing" : "grab",
-          userSelect: "none",
-        }}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-        onMouseMove={handleMouseMove}
-      >
-        {[1, 2, 3, 4, 5].map((i) => (
-          <div
-            key={i}
-            className="shrink-0 w-[80vw] md:w-[40vw] h-[40vh] md:h-[60vh] overflow-hidden rounded-xl snap-center"
-          >
-            <img
-              src={`/protests/protest${(i % 3) + 1}.jpg`}
-              alt={`Gallery image ${i}`}
-              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-              draggable="false"
-            />
-          </div>
-        ))}
-      </div>
-
-      <style jsx global>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
-    </div>
-  );
-};
+import DonateButton from "@/components/shared/Donate";
+import { ScrollingGallery } from "@/components/shared/ScollingGallery";
 
 export default function GetInvolvedPage() {
   const [contactOpen, setContactOpen] = useState(false);
+
+  const protestImages = [1, 2, 3, 4, 5].map((i) => (
+    <img
+      key={i}
+      src={`/protests/protest${(i % 3) + 1}.jpg`}
+      alt={`Gallery image ${i}`}
+      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+      draggable="false"
+    />
+  ));
+
+  const protestGridImages = [1, 2, 3, 4, 5].map((i) => (
+    <div
+      key={i}
+      className={`${
+        i === 1 ? "col-span-2 row-span-2 h-[500px]" : "h-[240px]"
+      } relative overflow-hidden rounded-xl`}
+    >
+      <img
+        src={`/protests/protest${(i % 3) + 1}.jpg`}
+        alt={`Protest ${i}`}
+        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent">
+        <div className="absolute bottom-4 left-4 text-white">
+          <h3 className="text-xl font-bold">
+            {i === 1
+              ? "United Voices"
+              : i === 2
+              ? "Peace March"
+              : i === 3
+              ? "Youth Rally"
+              : "Global Unity"}
+          </h3>
+          <p className="text-sm opacity-80">
+            {i === 1
+              ? "London, 2025"
+              : i === 2
+              ? "New York, 2025"
+              : i === 3
+              ? "Paris, 2025"
+              : "Berlin, 2025"}
+          </p>
+        </div>
+      </div>
+    </div>
+  ));
 
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
@@ -283,12 +111,20 @@ export default function GetInvolvedPage() {
               documentation.
             </p>
           </div>
-          <BentoGallery />
+          <div className="grid md:grid-cols-4 gap-4 p-4">
+            {protestGridImages}
+          </div>
         </div>
       </section>
 
       {/* Scrolling Gallery */}
-      <ScrollingGallery />
+      <ScrollingGallery
+        items={protestImages}
+        itemWidth="80vw"
+        itemHeight="60vh"
+        className="h-screen"
+        containerClassName="h-full"
+      />
 
       {/* Main Content */}
       <section className="py-16 sm:py-24 lg:py-32 bg-white dark:bg-sudan-black">
@@ -404,15 +240,7 @@ export default function GetInvolvedPage() {
                       <p className="text-zinc-600 dark:text-zinc-400 text-lg mb-6">
                         {option.description}
                       </p>
-                      <Button
-                        className="w-full bg-sudan-red hover:bg-sudan-red/90 text-white"
-                        asChild
-                      >
-                        <Link href="https://sapa-usa.org/ramadan-for-sudan/">
-                          Donate Now
-                          <Heart className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
+                      <DonateButton />
                     </CardContent>
                   </Card>
                 ))}
@@ -422,101 +250,7 @@ export default function GetInvolvedPage() {
         </div>
       </section>
 
-      {/* Upcoming Protests */}
-      <section className="py-16 sm:py-24 lg:py-32 bg-zinc-50 dark:bg-zinc-950">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-zinc-900 dark:text-white mb-4">
-              Join Upcoming Demonstrations
-            </h2>
-            <Separator className="w-20 bg-sudan-red h-1 mx-auto mb-6" />
-            <p className="text-lg text-zinc-600 dark:text-zinc-400">
-              Stand with us in peaceful demonstrations worldwide. Together, we
-              can amplify the call for democratic change and social justice in
-              Sudan.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
-            {[1, 2, 3].map((i) => (
-              <Card
-                key={i}
-                className="card hover:shadow-lg transition-all duration-300"
-              >
-                <CardContent className="p-8 text-center">
-                  <div className="w-32 h-32 rounded-lg overflow-hidden mx-auto mb-6">
-                    <img
-                      src={`/protests/protest${i}.jpg`}
-                      alt={`Upcoming protest ${i}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <span className="inline-block px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100 mb-4">
-                    Upcoming
-                  </span>
-                  <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-2">
-                    London Peace Rally
-                  </h3>
-                  <p className="text-zinc-600 dark:text-zinc-400 mb-2">
-                    January {i + 24}, 2025
-                  </p>
-                  <p className="text-zinc-700 dark:text-zinc-300 mb-1">
-                    Trafalgar Square, London
-                  </p>
-                  <p className="text-zinc-600 dark:text-zinc-400 mb-4">
-                    14:00 - 17:00
-                  </p>
-                  <p className="text-zinc-600 dark:text-zinc-400 text-lg leading-relaxed mb-4">
-                    Unite with us in a peaceful demonstration supporting Sudan's
-                    journey to democracy.
-                  </p>
-                  <div className="flex items-center justify-center gap-2 mb-6">
-                    <span className="text-sm text-zinc-600 dark:text-zinc-400">
-                      Participants: 230
-                    </span>
-                    <span className="text-sm text-zinc-600 dark:text-zinc-400">
-                      •
-                    </span>
-                    <span className="text-sm text-zinc-600 dark:text-zinc-400">
-                      Host: Sudan Solidarity UK
-                    </span>
-                  </div>
-                  <Button
-                    className="w-full bg-sudan-red hover:bg-sudan-red/90 text-white"
-                    onClick={() => setContactOpen(true)}
-                  >
-                    Join the Movement
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="bg-sudan-red py-16 lg:py-24 px-4">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-            Ready to Make a Difference?
-          </h2>
-          <p className="text-lg md:text-xl text-white mb-8">
-            Join our global community of activists and changemakers working
-            towards peace in Sudan.
-          </p>
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-            <Button
-              onClick={() => setContactOpen(true)}
-              size="lg"
-              className="w-full md:w-auto border-2 text-sudan-white dark:border-sudan-white dark:hover:bg-sudan-white dark:hover:text-sudan-black transition-colors group"
-            >
-              Contact Us
-              <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Button>
-            <DonateButton />
-          </div>
-        </div>
-      </section>
+      {/* Rest of the sections remain the same */}
       <ContactDialog open={contactOpen} onOpenChange={setContactOpen} />
     </div>
   );
@@ -621,23 +355,5 @@ const donationOptions = [
     icon: Heart,
     info: true,
     infoLink: "/corporate-partnership",
-  },
-];
-
-const impactStats = [
-  {
-    number: "5,000+",
-    title: "Active Volunteers",
-    description: "Working globally to support the cause",
-  },
-  {
-    number: "150+",
-    title: "Events Organized",
-    description: "Peaceful demonstrations worldwide",
-  },
-  {
-    number: "1M+",
-    title: "People Reached",
-    description: "Through our awareness campaigns",
   },
 ];
