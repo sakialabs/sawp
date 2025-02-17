@@ -3,7 +3,7 @@ import { Facebook, Twitter, Instagram } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-zinc-100 dark:bg-zinc-950 text-black dark:text-sudan-white py-12 transition-colors">
+    <footer className="bg-zinc-50 dark:bg-zinc-950 text-black dark:text-sudan-white py-12 transition-colors">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Organization Info */}
@@ -123,6 +123,19 @@ export default function Footer() {
                 >
                   Contact
                 </Link>
+              </li>
+              <li>
+                <span className="text-gray-600 dark:text-gray-400">|</span>
+              </li>
+              <li>
+                <a
+                  href="https://www.sakialabs.io/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-sudan-red transition-colors"
+                >
+                  Powered by Sakia Labs
+                </a>
               </li>
             </ul>
           </nav>

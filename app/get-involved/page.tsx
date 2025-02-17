@@ -122,7 +122,7 @@ export default function GetInvolvedPage() {
         items={protestImages}
         itemWidth="80vw"
         itemHeight="60vh"
-        className="h-screen"
+        className="h-screen bg-zinc-50 dark:bg-zinc-950"
         containerClassName="h-full"
       />
 

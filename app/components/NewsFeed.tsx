@@ -28,8 +28,8 @@ interface NewsFeedProps {
 export default function NewsFeed({
   className,
   itemsPerView = 3,
-  cardWidth = 300,
-  cardHeight = 450,
+  cardWidth = 280, // Adjusted card width
+  cardHeight = 380, // Adjusted card height
 }: NewsFeedProps) {
   const [news, setNews] = React.useState<NewsItem[]>([]);
   const [loading, setLoading] = React.useState(true);
@@ -88,7 +88,7 @@ export default function NewsFeed({
         items={newsCards}
         itemWidth={`${cardWidth}px`}
         itemHeight={`${cardHeight}px`}
-        className="min-h-[450px]"
+        className="min-h-[380px]" // Adjusted height
         gap={16}
       />
     </div>
@@ -97,8 +97,9 @@ export default function NewsFeed({
 
 function NewsCard({ item }: { item: NewsItem }) {
   return (
-    <article className="h-full bg-white dark:bg-zinc-900 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl overflow-hidden">
-      <div className="h-40 w-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
+    <article className="h-full bg-zinc-50 dark:bg-zinc-900 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 overflow-hidden flex flex-col">
+      {/* Image Section */}
+      <div className="h-32 w-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
         {item.imageUrl ? (
           <img
             src={item.imageUrl}
@@ -109,7 +110,7 @@ function NewsCard({ item }: { item: NewsItem }) {
               const parent = target.parentElement;
               if (parent) {
                 parent.className = cn(
-                  "h-40 w-full bg-gradient-to-br",
+                  "h-32 w-full bg-gradient-to-br",
                   "from-zinc-100 to-zinc-200",
                   "dark:from-zinc-800 dark:to-zinc-700",
                   "flex items-center justify-center"
@@ -125,7 +126,8 @@ function NewsCard({ item }: { item: NewsItem }) {
         )}
       </div>
 
-      <div className="p-4 flex flex-col gap-3">
+      {/* Content Section */}
+      <div className="p-4 flex flex-col gap-2 flex-1">
         <div className="flex justify-between items-start">
           <Badge variant="outline" className="bg-background text-xs">
             {item.category || "News"}
@@ -138,15 +140,15 @@ function NewsCard({ item }: { item: NewsItem }) {
           </time>
         </div>
 
-        <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-50 line-clamp-2 min-h-[2.75rem]">
+        <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-50 line-clamp-2">
           {item.title}
         </h3>
 
-        <p className="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2">
+        <p className="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-3 flex-1">
           {item.summary}
         </p>
 
-        <div className="flex justify-between items-center pt-3 border-t border-zinc-100 dark:border-zinc-800">
+        <div className="flex justify-between items-center pt-2 border-t border-zinc-100 dark:border-zinc-800">
           <span className="text-xs font-medium text-zinc-600 dark:text-zinc-400">
             {item.source}
           </span>
@@ -174,10 +176,10 @@ function NewsCardSkeleton({
 }) {
   return (
     <div
-      className="flex-none bg-white dark:bg-zinc-900 rounded-xl overflow-hidden"
+      className="flex-none bg-zinc-50 dark:bg-zinc-900 rounded-xl overflow-hidden"
       style={{ width, height }}
     >
-      <Skeleton className="h-40 w-full" />
+      <Skeleton className="h-32 w-full" />
       <div className="p-4 space-y-4">
         <div className="flex justify-between">
           <Skeleton className="h-5 w-16" />

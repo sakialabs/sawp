@@ -199,7 +199,7 @@ export default function AboutPage() {
       </section>
 
       {/* Our Team Section */}
-      <section className="py-16 sm:py-24 lg:py-32 bg-white dark:bg-sudan-black">
+      <section className="py-16 sm:py-24 lg:py-32 bg-zinc-50 dark:bg-zinc-950">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-24">
             <h2 className="text-3xl lg:text-4xl font-bold text-zinc-900 dark:text-white mt-2 mb-6">
@@ -217,7 +217,7 @@ export default function AboutPage() {
             <Card className="card">
               <AspectRatio ratio={1}>
                 <img
-                  src="/team/team1.jpg"
+                  src="/team/team1.png"
                   alt="Team member 1"
                   className="object-cover w-full h-full"
                 />
@@ -236,7 +236,7 @@ export default function AboutPage() {
             <Card className="card">
               <AspectRatio ratio={1}>
                 <img
-                  src="/team/team2.jpg"
+                  src="/team/team2.png"
                   alt="Team member 2"
                   className="object-cover w-full h-full"
                 />
@@ -257,7 +257,7 @@ export default function AboutPage() {
             <Card className="card">
               <AspectRatio ratio={1}>
                 <img
-                  src="/team/team3.jpg"
+                  src="/team/team3.png"
                   alt="Team member 3"
                   className="object-cover w-full h-full"
                 />

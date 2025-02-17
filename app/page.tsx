@@ -39,7 +39,7 @@ export default function Home() {
     <main className="bg-sudan-white dark:bg-sudan-black min-h-screen">
       <HeroSection />
 
-      <section className="py-16 md:py-24 relative z-0">
+      <section className="py-16 md:py-24 relative z-0 bg-zinc-50 dark:bg-zinc-950">
         <div className="container mx-auto px-4 md:px-6">
           <ProtestMap />
         </div>
